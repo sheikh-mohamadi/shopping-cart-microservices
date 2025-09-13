@@ -1,0 +1,12 @@
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/bin/Debug/net9.0/Shared.Kernel.deps.json
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/bin/Debug/net9.0/Shared.Kernel.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/bin/Debug/net9.0/Shared.Kernel.pdb
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.AssemblyInfoInputs.cache
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.AssemblyInfo.cs
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.csproj.CoreCompileInputs.cache
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/refint/Shared.Kernel.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.pdb
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/ref/Shared.Kernel.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/obj/Debug/net9.0/Shared.Kernel.csproj.AssemblyReference.cache

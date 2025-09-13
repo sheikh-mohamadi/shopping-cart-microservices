@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "se1J43YQ5I0=",
+  "success": true,
+  "projectFilePath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Shared.Kernel/Shared.Kernel.csproj",
+  "expectedPackageFiles": [
+    "/Users/mohammadreza/.nuget/packages/confluent.kafka/2.3.0/confluent.kafka.2.3.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/librdkafka.redist/2.3.0/librdkafka.redist.2.3.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.3/microsoft.extensions.configuration.abstractions.9.0.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.3/microsoft.extensions.dependencyinjection.abstractions.9.0.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/microsoft.extensions.logging.abstractions/9.0.3/microsoft.extensions.logging.abstractions.9.0.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/microsoft.extensions.primitives/9.0.3/microsoft.extensions.primitives.9.0.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/system.memory/4.5.0/system.memory.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
