@@ -1,0 +1,55 @@
+
+---
+
+## 🔧 .gitignore File
+
+```gitignore
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.vs/
+*.swp
+*~
+
+# NuGet
+packages/
+*.nupkg
+.nuget/
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+appsettings.*.json
+secrets.json
+*.pfx
+*.p12
+*.key
+*.crt
