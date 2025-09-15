@@ -1,11 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "OBTTs/uRywE=",
-  "success": true,
+  "dgSpecHash": "rSmuzydtAUo=",
+  "success": false,
   "projectFilePath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/Fraud.Service.csproj",
   "expectedPackageFiles": [
     "/Users/mohammadreza/.nuget/packages/confluent.kafka/2.3.0/confluent.kafka.2.3.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/elasticsearch.net/7.17.5/elasticsearch.net.7.17.5.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/google.protobuf/3.22.5/google.protobuf.3.22.5.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/grpc.core.api/2.52.0/grpc.core.api.2.52.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/grpc.net.client/2.52.0/grpc.net.client.2.52.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/grpc.net.common/2.52.0/grpc.net.common.2.52.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/librdkafka.redist/2.3.0/librdkafka.redist.2.3.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/microsoft.csharp/4.6.0/microsoft.csharp.4.6.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.configuration/9.0.3/microsoft.extensions.configuration.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.3/microsoft.extensions.configuration.abstractions.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.configuration.binder/9.0.3/microsoft.extensions.configuration.binder.9.0.3.nupkg.sha512",
@@ -16,6 +22,7 @@
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.configuration.usersecrets/9.0.3/microsoft.extensions.configuration.usersecrets.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.dependencyinjection/9.0.3/microsoft.extensions.dependencyinjection.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.3/microsoft.extensions.dependencyinjection.abstractions.9.0.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/microsoft.extensions.dependencymodel/8.0.0/microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.diagnostics/9.0.3/microsoft.extensions.diagnostics.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.diagnostics.abstractions/9.0.3/microsoft.extensions.diagnostics.abstractions.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.fileproviders.abstractions/9.0.3/microsoft.extensions.fileproviders.abstractions.9.0.3.nupkg.sha512",
@@ -33,8 +40,42 @@
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.options/9.0.3/microsoft.extensions.options.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.options.configurationextensions/9.0.3/microsoft.extensions.options.configurationextensions.9.0.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/microsoft.extensions.primitives/9.0.3/microsoft.extensions.primitives.9.0.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/opentelemetry/1.9.0/opentelemetry.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/opentelemetry.api/1.9.0/opentelemetry.api.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/opentelemetry.api.providerbuilderextensions/1.9.0/opentelemetry.api.providerbuilderextensions.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/opentelemetry.exporter.opentelemetryprotocol/1.9.0/opentelemetry.exporter.opentelemetryprotocol.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/opentelemetry.extensions.hosting/1.9.0/opentelemetry.extensions.hosting.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/opentelemetry.instrumentation.runtime/1.9.0/opentelemetry.instrumentation.runtime.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog/3.1.1/serilog.3.1.1.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.aspnetcore/8.0.1/serilog.aspnetcore.8.0.1.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.extensions.hosting/8.0.0/serilog.extensions.hosting.8.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.extensions.logging/8.0.0/serilog.extensions.logging.8.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.formatting.compact/2.0.0/serilog.formatting.compact.2.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.formatting.elasticsearch/9.0.0/serilog.formatting.elasticsearch.9.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.settings.configuration/8.0.0/serilog.settings.configuration.8.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.sinks.console/4.1.0/serilog.sinks.console.4.1.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.sinks.debug/2.0.0/serilog.sinks.debug.2.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.sinks.elasticsearch/9.0.0/serilog.sinks.elasticsearch.9.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.sinks.periodicbatching/3.1.0/serilog.sinks.periodicbatching.3.1.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/system.diagnostics.diagnosticsource/8.0.0/system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/system.diagnostics.eventlog/9.0.3/system.diagnostics.eventlog.9.0.3.nupkg.sha512",
-    "/Users/mohammadreza/.nuget/packages/system.memory/4.5.0/system.memory.4.5.0.nupkg.sha512"
+    "/Users/mohammadreza/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Serilog.Sinks.Console from 5.0.0 to 4.1.0. Reference the package directly from the project to select a different version. \n Fraud.Service -> Serilog.AspNetCore 8.0.1 -> Serilog.Sinks.Console (>= 5.0.0) \n Fraud.Service -> Serilog.Sinks.Console (>= 4.1.0)",
+      "projectPath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/Fraud.Service.csproj",
+      "filePath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/Fraud.Service.csproj",
+      "libraryId": "Serilog.Sinks.Console",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }

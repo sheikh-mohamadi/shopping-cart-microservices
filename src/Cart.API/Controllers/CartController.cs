@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Cart.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/{cartId:guid}")]
 public class CartController(
     CartService cartService,
     ILogger<CartController> logger)
     : ControllerBase
 {
-    [HttpPost("{cartId}/items")]
+    [HttpPost("items")]
     public async Task<IActionResult> AddItem(
         Guid cartId,
         [FromBody] AddItemRequest request)
@@ -42,7 +42,7 @@ public class CartController(
         }
     }
 
-    [HttpDelete("{cartId}/items/{productId}")]
+    [HttpDelete("items/{productId:guid}")]
     public async Task<IActionResult> RemoveItem(
         Guid cartId,
         Guid productId,
@@ -67,7 +67,7 @@ public class CartController(
         }
     }
 
-    [HttpGet("{cartId}/events")]
+    [HttpGet("events")]
     public async Task<IActionResult> GetEvents(Guid cartId)
     {
         try

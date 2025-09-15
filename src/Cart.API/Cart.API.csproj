@@ -7,15 +7,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3"/>
-        <PackageReference Include="Confluent.Kafka" Version="2.3.0"/>
-        <PackageReference Include="StackExchange.Redis" Version="2.7.33"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="StackExchange.Redis" Version="2.7.33"/>
+        <PackageReference Include="Confluent.Kafka" Version="2.3.0"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="8.0.1"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
+        <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="9.0.0"/>
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0"/>
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Cart.Domain\Cart.Domain.csproj"/>
-        <ProjectReference Include="..\Shared.Kernel\Shared.Kernel.csproj" />
+        <ProjectReference Include="..\Shared.Kernel\Shared.Kernel.csproj"/>
     </ItemGroup>
 
 </Project>

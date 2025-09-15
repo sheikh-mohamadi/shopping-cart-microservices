@@ -6,17 +6,8 @@ using Cart.Domain.Events;
 
 namespace Cart.API.Services;
 
-public class CartService
+public class CartService(IProducer<string, string> producer, ILogger<CartService> logger)
 {
-    private readonly IProducer<string, string> _producer;
-    private readonly ILogger<CartService> _logger;
-
-    public CartService(IProducer<string, string> producer, ILogger<CartService> logger)
-    {
-        _producer = producer;
-        _logger = logger;
-    }
-
     public async Task PublishEventAsync(CartEvent @event)
     {
         try
@@ -27,12 +18,12 @@ public class CartService
                 Value = JsonSerializer.Serialize(@event)
             };
 
-            await _producer.ProduceAsync("cart-events", message);
-            _logger.LogInformation("Event {EventType} published for cart {CartId}", @event.EventType, @event.CartId);
+            await producer.ProduceAsync("cart-events", message);
+            logger.LogInformation("Event {EventType} published for cart {CartId}", @event.EventType, @event.CartId);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error publishing event for cart {CartId}", @event.CartId);
+            logger.LogError(ex, "Error publishing event for cart {CartId}", @event.CartId);
             throw;
         }
     }
@@ -41,7 +32,7 @@ public class CartService
     {
         // این متد نیاز به پیاده‌سازی دارد
         // باید رویدادها را از event store بازیابی کند
-        _logger.LogInformation("Retrieving events for cart {CartId}", cartId);
+        logger.LogInformation("Retrieving events for cart {CartId}", cartId);
         return await Task.FromResult(Enumerable.Empty<CartEvent>());
     }
 }

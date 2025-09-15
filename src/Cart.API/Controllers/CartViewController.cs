@@ -9,7 +9,7 @@ namespace Cart.API.Controllers;
 [Route("api/cart/view")]
 public class CartViewController(IConnectionMultiplexer redis) : ControllerBase
 {
-    [HttpGet("{cartId}")]
+    [HttpGet("{cartId:guid}")]
     public async Task<IActionResult> GetCartView(Guid cartId)
     {
         var db = redis.GetDatabase();

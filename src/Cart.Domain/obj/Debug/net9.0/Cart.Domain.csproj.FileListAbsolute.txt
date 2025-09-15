@@ -5,6 +5,7 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/Cart.Domain.AssemblyInfoInputs.cache
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/Cart.Domain.AssemblyInfo.cs
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/Cart.Domain.csproj.CoreCompileInputs.cache
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/Cart.Domain.sourcelink.json
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/Cart.Domain.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/refint/Cart.Domain.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Domain/obj/Debug/net9.0/Cart.Domain.pdb

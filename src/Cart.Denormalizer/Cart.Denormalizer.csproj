@@ -6,14 +6,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-Cart.Denormalizer-b8710143-4bd6-4546-8e41-f21635ab1fee</UserSecretsId>
   </PropertyGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.3" />
         <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
+        <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="9.0.0" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0" />
     </ItemGroup>
 
   <ItemGroup>
