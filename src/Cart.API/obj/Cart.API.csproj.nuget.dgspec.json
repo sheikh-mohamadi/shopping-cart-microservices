@@ -81,7 +81,7 @@
             },
             "Serilog.Sinks.Console": {
               "target": "Package",
-              "version": "[4.1.0, )"
+              "version": "[5.0.0, )"
             },
             "Serilog.Sinks.Elasticsearch": {
               "target": "Package",

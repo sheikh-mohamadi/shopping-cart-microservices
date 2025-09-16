@@ -1,4 +1,5 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/appsettings.Development.json
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/appsettings.Docker.json
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/appsettings.json
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Cart.API.staticwebassets.endpoints.json
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Cart.API
@@ -12,9 +13,9 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Grpc.Core.Api.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Grpc.Net.Client.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Grpc.Net.Common.dll
-/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Microsoft.OpenApi.dll
@@ -25,11 +26,17 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/OpenTelemetry.Extensions.Hosting.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/OpenTelemetry.Instrumentation.AspNetCore.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Http.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Runtime.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Pipelines.Sockets.Unofficial.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.AspNetCore.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Extensions.Hosting.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Extensions.Logging.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Formatting.Compact.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Formatting.Elasticsearch.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Settings.Configuration.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Sinks.Console.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Sinks.Debug.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Sinks.Elasticsearch.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Sinks.File.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Serilog.Sinks.PeriodicBatching.dll

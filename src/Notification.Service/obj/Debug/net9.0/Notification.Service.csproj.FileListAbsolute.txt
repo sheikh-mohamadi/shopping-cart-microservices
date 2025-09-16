@@ -21,6 +21,7 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.Configuration.UserSecrets.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Microsoft.Extensions.FileProviders.Abstractions.dll
@@ -43,12 +44,16 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/OpenTelemetry.Api.ProviderBuilderExtensions.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/OpenTelemetry.Extensions.Hosting.dll
-/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/OpenTelemetry.Instrumentation.AspNetCore.dll
-/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Http.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Runtime.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.AspNetCore.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Extensions.Hosting.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Extensions.Logging.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Formatting.Compact.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Formatting.Elasticsearch.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Settings.Configuration.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Sinks.Console.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Sinks.Debug.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Sinks.Elasticsearch.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Sinks.File.dll
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/Serilog.Sinks.PeriodicBatching.dll

@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "fcWQauX8hwc=",
-  "success": false,
+  "dgSpecHash": "6XjdEDRNQrU=",
+  "success": true,
   "projectFilePath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/Billing.Service.csproj",
   "expectedPackageFiles": [
     "/Users/mohammadreza/.nuget/packages/confluent.kafka/2.3.0/confluent.kafka.2.3.0.nupkg.sha512",
@@ -53,7 +53,7 @@
     "/Users/mohammadreza/.nuget/packages/serilog.formatting.compact/2.0.0/serilog.formatting.compact.2.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.formatting.elasticsearch/9.0.0/serilog.formatting.elasticsearch.9.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.settings.configuration/8.0.0/serilog.settings.configuration.8.0.0.nupkg.sha512",
-    "/Users/mohammadreza/.nuget/packages/serilog.sinks.console/4.1.0/serilog.sinks.console.4.1.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/serilog.sinks.console/5.0.0/serilog.sinks.console.5.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.sinks.debug/2.0.0/serilog.sinks.debug.2.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.sinks.elasticsearch/9.0.0/serilog.sinks.elasticsearch.9.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
@@ -65,17 +65,5 @@
     "/Users/mohammadreza/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1605",
-      "level": "Error",
-      "message": "Warning As Error: Detected package downgrade: Serilog.Sinks.Console from 5.0.0 to 4.1.0. Reference the package directly from the project to select a different version. \n Billing.Service -> Serilog.AspNetCore 8.0.1 -> Serilog.Sinks.Console (>= 5.0.0) \n Billing.Service -> Serilog.Sinks.Console (>= 4.1.0)",
-      "projectPath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/Billing.Service.csproj",
-      "filePath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/Billing.Service.csproj",
-      "libraryId": "Serilog.Sinks.Console",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }
