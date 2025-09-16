@@ -101,3 +101,4 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/obj/Debug/net9.0/Fraud.Service.pdb
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/obj/Debug/net9.0/Fraud.Service.genruntimeconfig.cache
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/obj/Debug/net9.0/ref/Fraud.Service.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Fraud.Service/bin/Debug/net9.0/appsettings.Docker.json

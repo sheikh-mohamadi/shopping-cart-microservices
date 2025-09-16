@@ -101,3 +101,4 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/obj/Debug/net9.0/Billing.Service.pdb
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/obj/Debug/net9.0/Billing.Service.genruntimeconfig.cache
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/obj/Debug/net9.0/ref/Billing.Service.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Billing.Service/bin/Debug/net9.0/appsettings.Docker.json

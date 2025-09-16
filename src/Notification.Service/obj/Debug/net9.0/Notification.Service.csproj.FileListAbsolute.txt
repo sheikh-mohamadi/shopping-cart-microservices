@@ -99,3 +99,4 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/obj/Debug/net9.0/Notification.Service.pdb
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/obj/Debug/net9.0/Notification.Service.genruntimeconfig.cache
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/obj/Debug/net9.0/ref/Notification.Service.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/bin/Debug/net9.0/appsettings.Docker.json
