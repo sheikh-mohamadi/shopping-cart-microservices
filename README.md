@@ -1,4 +1,10 @@
-# Shopping Cart Microservices
+# 🛒 Shopping Cart Microservices
+
+![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
+![Kafka](https://img.shields.io/badge/Apache%20Kafka-2.3-231F20?logo=apachekafka)
+![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql)
+![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?logo=docker)
 
 A distributed, event-driven shopping cart system built with .NET 9 using CQRS, Event Sourcing, and Microservices Architecture.
 
