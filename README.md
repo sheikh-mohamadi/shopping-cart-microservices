@@ -183,25 +183,6 @@ Access monitoring tools:
 - **Prometheus**: http://localhost:9090
 - **Kibana**: http://localhost:5601
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow CQRS and Event Sourcing patterns
-- Ensure events are properly serialized/deserialized
-- Maintain OpenTelemetry instrumentation
-- Include appropriate logging with Serilog
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🐛 Troubleshooting
 
 ### Common Issues
@@ -252,6 +233,4 @@ Check the `infra/` directory for monitoring configuration files.
 - [ ] Load testing suite
 - [ ] Additional monitoring dashboards
 
----
 
-For questions and support, please open an issue in the GitHub repository.
