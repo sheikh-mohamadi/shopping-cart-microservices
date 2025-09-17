@@ -5,6 +5,7 @@ using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using Shared.Kernel;
+using Shared.Kernel.Kafka;
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()

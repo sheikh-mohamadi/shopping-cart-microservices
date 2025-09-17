@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Kernel.Kafka;
+
+namespace Shared.Kernel.Kafka;
 
 public static class KafkaServiceProviderExtensions
 {
