@@ -1,16 +1,17 @@
-using StackExchange.Redis;
 using Cart.API.Services;
-using Shared.Kernel;
-using Shared.Kernel.Kafka;
-using Serilog;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using OpenTelemetry.Metrics;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using Shared.Kernel;
+using Shared.Kernel.Kafka;
+using StackExchange.Redis;
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
-    .WriteTo.Elasticsearch(new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
+    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
     {
         AutoRegisterTemplate = true,
         IndexFormat = "shopping-cart-logs-{0:yyyy.MM.dd}"
@@ -43,11 +44,13 @@ builder.Services.AddOpenTelemetry()
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
         .AddSource("Cart.API")
-        .AddOtlpExporter(opt => opt.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317")))
+        .AddOtlpExporter(opt =>
+            opt.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317")))
     .WithMetrics(mp => mp
         .AddAspNetCoreInstrumentation()
         .AddRuntimeInstrumentation()
-        .AddOtlpExporter(opt => opt.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317")));
+        .AddOtlpExporter(opt =>
+            opt.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317")));
 
 var app = builder.Build();
 

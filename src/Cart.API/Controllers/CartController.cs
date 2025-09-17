@@ -1,5 +1,5 @@
-using Cart.Domain.Events;
 using Cart.API.Services;
+using Cart.Domain.Events;
 using Cart.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 

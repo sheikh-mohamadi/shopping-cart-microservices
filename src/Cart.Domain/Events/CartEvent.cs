@@ -3,8 +3,8 @@ using Cart.Domain.Models;
 
 namespace Cart.Domain.Events;
 
-[JsonDerivedType(typeof(ItemAddedEvent), typeDiscriminator: "item_added")]
-[JsonDerivedType(typeof(ItemRemovedEvent), typeDiscriminator: "item_removed")]
+[JsonDerivedType(typeof(ItemAddedEvent), "item_added")]
+[JsonDerivedType(typeof(ItemRemovedEvent), "item_removed")]
 public abstract class CartEvent
 {
     public Guid EventId { get; set; } = Guid.NewGuid();

@@ -1,8 +1,8 @@
 // src/Cart.API/Services/CartService.cs
 
 using System.Text.Json;
-using Confluent.Kafka;
 using Cart.Domain.Events;
+using Confluent.Kafka;
 
 namespace Cart.API.Services;
 

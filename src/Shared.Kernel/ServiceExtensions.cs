@@ -1,7 +1,7 @@
 using Confluent.Kafka;
-using Shared.Kernel.Kafka;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.Kernel.Kafka;
 
 namespace Shared.Kernel;
 
@@ -23,7 +23,8 @@ public static class ServiceExtensions
         return services;
     }
 
-    public static IServiceCollection AddKafkaConsumer(this IServiceCollection services, IConfiguration configuration, string groupId)
+    public static IServiceCollection AddKafkaConsumer(this IServiceCollection services, IConfiguration configuration,
+        string groupId)
     {
         services.AddSingleton<IConsumer<string, string>>(sp =>
         {

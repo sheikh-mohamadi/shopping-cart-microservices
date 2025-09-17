@@ -1,6 +1,6 @@
 using System.Text.Json;
-using Confluent.Kafka;
 using Cart.Domain.Events;
+using Confluent.Kafka;
 
 namespace Fraud.Service;
 
@@ -20,15 +20,11 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
             logger.LogInformation("Subscribed to cart-events topic");
 
             while (!stoppingToken.IsCancellationRequested)
-            {
                 try
                 {
                     var consumeResult = consumer.Consume(stoppingToken);
 
-                    if (consumeResult?.Message?.Value == null)
-                    {
-                        continue;
-                    }
+                    if (consumeResult?.Message?.Value == null) continue;
 
                     logger.LogDebug("Received message for fraud check: {Message}", consumeResult.Message.Value);
 
@@ -36,10 +32,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                         consumeResult.Message.Value,
                         new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                    if (cartEvent != null)
-                    {
-                        await CheckForFraud(cartEvent);
-                    }
+                    if (cartEvent != null) await CheckForFraud(cartEvent);
 
                     consumer.Commit(consumeResult);
                 }
@@ -53,7 +46,6 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                     logger.LogError(ex, "Error processing message");
                     await Task.Delay(1000, stoppingToken);
                 }
-            }
         }
         finally
         {
