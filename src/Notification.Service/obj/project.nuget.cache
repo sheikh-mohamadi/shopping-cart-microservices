@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DKpCU3zABbo=",
+  "dgSpecHash": "jBIQXK1+V5E=",
   "success": true,
   "projectFilePath": "/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Notification.Service/Notification.Service.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,8 @@
     "/Users/mohammadreza/.nuget/packages/opentelemetry.exporter.opentelemetryprotocol/1.9.0/opentelemetry.exporter.opentelemetryprotocol.1.9.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/opentelemetry.extensions.hosting/1.9.0/opentelemetry.extensions.hosting.1.9.0.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/opentelemetry.instrumentation.runtime/1.9.0/opentelemetry.instrumentation.runtime.1.9.0.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/polly/8.6.3/polly.8.6.3.nupkg.sha512",
+    "/Users/mohammadreza/.nuget/packages/polly.core/8.6.3/polly.core.8.6.3.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog/3.1.1/serilog.3.1.1.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.aspnetcore/8.0.1/serilog.aspnetcore.8.0.1.nupkg.sha512",
     "/Users/mohammadreza/.nuget/packages/serilog.extensions.hosting/8.0.0/serilog.extensions.hosting.8.0.0.nupkg.sha512",

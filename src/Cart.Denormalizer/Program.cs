@@ -2,6 +2,7 @@ using Cart.Denormalizer;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Polly;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using Shared.Kernel;
@@ -47,8 +48,6 @@ var host = Host.CreateDefaultBuilder(args)
     })
     .Build();
 
-using var scope = host.Services.CreateScope();
-var topicManager = scope.ServiceProvider.GetRequiredService<ITopicManager>();
-await topicManager.EnsureTopicsExistAsync(["cart-events"]);
+await host.Services.EnsureKafkaTopicsAsync(["cart-events"]);
 
 await host.RunAsync();

@@ -70,18 +70,6 @@
             "OpenTelemetry.Instrumentation.Runtime": {
               "target": "Package",
               "version": "[1.9.0, )"
-            },
-            "Serilog.AspNetCore": {
-              "target": "Package",
-              "version": "[8.0.1, )"
-            },
-            "Serilog.Sinks.Console": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Serilog.Sinks.Elasticsearch": {
-              "target": "Package",
-              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -214,6 +202,22 @@
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.3, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Serilog.Sinks.Elasticsearch": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
