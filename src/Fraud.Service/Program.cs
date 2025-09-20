@@ -1,25 +1,12 @@
 using Fraud.Service;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Polly;
-using Serilog;
-using Serilog.Sinks.Elasticsearch;
 using Shared.Kernel;
 using Shared.Kernel.Kafka;
 
-Log.Logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
-    {
-        AutoRegisterTemplate = true,
-        IndexFormat = "shopping-cart-logs-{0:yyyy.MM.dd}"
-    })
-    .CreateLogger();
-
 var host = Host.CreateDefaultBuilder(args)
-    .UseSerilog()
     .ConfigureServices((context, services) =>
     {
         services.AddKafkaServices(context.Configuration);
@@ -31,11 +18,30 @@ var host = Host.CreateDefaultBuilder(args)
             .WithTracing(tp => tp
                 .AddSource("Fraud.Service")
                 .AddOtlpExporter(opt =>
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317")))
+                {
+                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                }))
             .WithMetrics(mp => mp
                 .AddRuntimeInstrumentation()
                 .AddOtlpExporter(opt =>
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317")));
+                {
+                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                }));
+    })
+    .ConfigureLogging((context, logging) =>
+    {
+        logging.ClearProviders();
+        logging.AddOpenTelemetry(opt =>
+        {
+            opt.IncludeScopes = true;
+            opt.IncludeFormattedMessage = true;
+            opt.ParseStateValues = true;
+            opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("Fraud.Service"));
+            opt.AddOtlpExporter(exporter =>
+            {
+                exporter.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+            });
+        });
     })
     .Build();
 

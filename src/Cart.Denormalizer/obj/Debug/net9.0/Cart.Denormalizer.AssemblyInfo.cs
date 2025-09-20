@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cart.Denormalizer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa6c0a46f4f2a46ec8c4e92d04b7dd28fe531d6b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdb0bf369042253195bb57c2643a50cf3eb392e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cart.Denormalizer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cart.Denormalizer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
