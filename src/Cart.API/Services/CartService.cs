@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Cart.Domain.Events;
 using Confluent.Kafka;
+using Cart.API.Exceptions;
 
 namespace Cart.API.Services;
 
@@ -25,7 +26,7 @@ public class CartService(IProducer<string, string> producer, ILogger<CartService
                 "Kafka produce error while publishing {EventType} for cart {CartId}",
                 @event.EventType, @event.CartId);
 
-            throw new ApplicationException(
+            throw new KafkaPublishException(
                 $"Kafka publish failed for cart {@event.CartId} (event: {@event.EventType})", ex);
         }
         catch (Exception ex)
@@ -34,14 +35,13 @@ public class CartService(IProducer<string, string> producer, ILogger<CartService
                 "Unexpected error while publishing {EventType} for cart {CartId}",
                 @event.EventType, @event.CartId);
 
-            throw new ApplicationException(
+            throw new KafkaPublishException(
                 $"Unexpected error publishing event {@event.EventType} for cart {@event.CartId}", ex);
         }
     }
 
     public async Task<IEnumerable<CartEvent>> GetEventsAsync(Guid cartId)
     {
-        // این متد نیاز به پیاده‌سازی دارد
         logger.LogInformation("Retrieving events for cart {CartId}", cartId);
         return await Task.FromResult(Enumerable.Empty<CartEvent>());
     }
