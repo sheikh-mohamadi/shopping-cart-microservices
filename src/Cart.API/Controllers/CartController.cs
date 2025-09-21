@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Cart.API.Services;
 using Cart.Domain.Events;
 using Cart.Domain.Models;
@@ -22,13 +24,13 @@ public class CartController(
             var @event = new ItemAddedEvent
             {
                 CartId = cartId,
-                UserId = request.UserId,
+                UserId = request.UserId!.Value,
                 Item = new CartItem
                 {
-                    ProductId = request.ProductId,
-                    ProductName = request.ProductName,
-                    Price = request.Price,
-                    Quantity = request.Quantity
+                    ProductId = request.ProductId!.Value,
+                    ProductName = request.ProductName!,
+                    Price = request.Price!.Value,
+                    Quantity = request.Quantity!.Value
                 }
             };
 
@@ -53,7 +55,7 @@ public class CartController(
             var @event = new ItemRemovedEvent
             {
                 CartId = cartId,
-                UserId = request.UserId,
+                UserId = request.UserId!.Value,
                 ProductId = productId
             };
 
@@ -84,10 +86,11 @@ public class CartController(
 }
 
 public record AddItemRequest(
-    Guid UserId,
-    Guid ProductId,
-    string ProductName,
-    decimal Price,
-    int Quantity);
+    [property: Required, JsonRequired] Guid? UserId,
+    [property: Required, JsonRequired] Guid? ProductId,
+    [property: Required, JsonRequired] string? ProductName,
+    [property: Required, JsonRequired] decimal? Price,
+    [property: Required, JsonRequired] int? Quantity);
 
-public record RemoveItemRequest(Guid UserId);
+public record RemoveItemRequest(
+    [property: Required, JsonRequired] Guid? UserId);

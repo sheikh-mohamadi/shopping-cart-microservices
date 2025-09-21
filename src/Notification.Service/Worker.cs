@@ -36,11 +36,18 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                         var userId = after.GetProperty("UserId").GetString();
                         var email = after.GetProperty("Email").GetString();
 
-                        logger.LogInformation(
-                            "📧 Sending notification to user {UserId} with email {Email} about profile update",
-                            userId, email);
+                        if (!string.IsNullOrWhiteSpace(email))
+                        {
+                            logger.LogInformation(
+                                "📧 Sending notification to user {UserId} with email {Email} about profile update",
+                                userId ?? "unknown", email);
 
-                        await SendNotification(userId, email);
+                            await SendNotification(email);
+                        }
+                        else
+                        {
+                            logger.LogWarning("Skipping notification because email is missing for user {UserId}", userId);
+                        }
                     }
 
                     consumer.Commit(consumeResult);
@@ -61,10 +68,9 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
             consumer.Close();
         }
     }
-
-    private async Task SendNotification(string userId, string email)
+    
+    private async Task SendNotification(string email)
     {
-        // پیاده‌سازی ارسال نوتیفیکیشن
         logger.LogInformation("✅ Notification sent to {Email}", email);
         await Task.Delay(100);
     }

@@ -7,6 +7,11 @@ namespace Fraud.Service;
 public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
     : BackgroundService
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         logger.LogInformation("Fraud Service starting...");
@@ -30,7 +35,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
 
                     var cartEvent = JsonSerializer.Deserialize<CartEvent>(
                         consumeResult.Message.Value,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        JsonOptions); // ✅ استفاده از instance کش‌شده
 
                     if (cartEvent != null) await CheckForFraud(cartEvent);
 
@@ -58,8 +63,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
         logger.LogInformation(
             "🔍 Checking for fraud in cart {CartId} for user {UserId}",
             @event.CartId, @event.UserId);
-
-        // پیاده‌سازی منطق تشخیص تقلب
+        
         await Task.Delay(150);
 
         logger.LogInformation(

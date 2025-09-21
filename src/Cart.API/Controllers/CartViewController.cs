@@ -17,15 +17,28 @@ public class CartViewController(IConnectionMultiplexer redis) : ControllerBase
 
         var items = await db.HashGetAllAsync(cartKey);
 
-        var cartItems = items.Select(item =>
-            JsonSerializer.Deserialize<CartItem>(item.Value)).ToList();
+        var cartItems = items
+            .Where(item => !item.Value.IsNullOrEmpty)
+            .Select(item =>
+            {
+                try
+                {
+                    return JsonSerializer.Deserialize<CartItem>(item.Value!)!;
+                }
+                catch (JsonException)
+                {
+                    return null;
+                }
+            })
+            .Where(ci => ci != null)
+            .ToList()!;
 
-        var total = cartItems.Sum(i => i.Price * i.Quantity);
+        var total = cartItems.Sum(i => i!.Price * i.Quantity);
 
         return Ok(new CartView
         {
             CartId = cartId,
-            Items = cartItems,
+            Items = cartItems!,
             Total = total,
             ItemCount = cartItems.Count
         });
@@ -35,7 +48,7 @@ public class CartViewController(IConnectionMultiplexer redis) : ControllerBase
 public record CartView
 {
     public Guid CartId { get; set; }
-    public List<CartItem> Items { get; set; } = new();
+    public List<CartItem> Items { get; set; } = [];
     public decimal Total { get; set; }
     public int ItemCount { get; set; }
 }

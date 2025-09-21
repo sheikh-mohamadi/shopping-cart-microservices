@@ -12,42 +12,55 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddKafkaServices(context.Configuration);
         services.AddKafkaConsumer(context.Configuration, "billing-service-group");
         services.AddHostedService<Worker>();
-        
-        var serviceName = "cart-service";
-        var serviceVersion = "1.0.0";
+
+        var otlpEndpoint = context.Configuration.GetValue<string>("Otlp:Endpoint");
+        var serviceName = context.Configuration.GetValue<string>("Service:Name", "Billing.Service");
+        var serviceVersion = context.Configuration.GetValue<string>("Service:Version", "1.0.0");
 
         services.AddOpenTelemetry()
-            .ConfigureResource(r => r.AddService("Billing.Service"))
+            .ConfigureResource(r => r.AddService(serviceName, serviceVersion))
             .WithTracing(tp => tp
-                .AddSource("Billing.Service")
+                .AddSource(serviceName)
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                    if (!string.IsNullOrWhiteSpace(otlpEndpoint))
+                        opt.Endpoint = new Uri(otlpEndpoint);
                 }))
             .WithMetrics(mp => mp
                 .AddRuntimeInstrumentation()
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                    if (!string.IsNullOrWhiteSpace(otlpEndpoint))
+                        opt.Endpoint = new Uri(otlpEndpoint);
                 }));
     })
     .ConfigureLogging((context, logging) =>
     {
         logging.ClearProviders();
+
+        var otlpEndpoint = context.Configuration.GetValue<string>("Otlp:Endpoint");
+        var serviceName = context.Configuration.GetValue<string>("Service:Name", "Billing.Service");
+
         logging.AddOpenTelemetry(opt =>
         {
             opt.IncludeScopes = true;
             opt.IncludeFormattedMessage = true;
             opt.ParseStateValues = true;
-            opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("Billing.Service"));
+            opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName));
             opt.AddOtlpExporter(exporter =>
             {
-                exporter.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                if (!string.IsNullOrWhiteSpace(otlpEndpoint))
+                    exporter.Endpoint = new Uri(otlpEndpoint);
             });
         });
     })
     .Build();
 
-await host.Services.EnsureKafkaTopicsAsync(["cart-events"]);
+var kafkaTopics = host.Services
+    .GetRequiredService<IConfiguration>()
+    .GetSection("Kafka:Topics")
+    .Get<string[]>() ?? ["cart-events"];
+
+await host.Services.EnsureKafkaTopicsAsync(kafkaTopics);
 
 await host.RunAsync();

@@ -10,17 +10,23 @@ using StackExchange.Redis;
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        services.AddKafkaServices(context.Configuration);
-        services.AddKafkaConsumer(context.Configuration, "cart-denormalizer-group");
+        var configuration = context.Configuration;
+
+        services.AddKafkaServices(configuration);
+        services.AddKafkaConsumer(configuration, "cart-denormalizer-group");
 
         services.AddSingleton<IConnectionMultiplexer>(sp =>
         {
-            var connectionString = context.Configuration["Redis:ConnectionString"] ?? "localhost:6379";
-            var configuration = ConfigurationOptions.Parse(connectionString);
-            return ConnectionMultiplexer.Connect(configuration);
+            var connectionString = configuration.GetValue<string>("Redis:ConnectionString")
+                               ?? throw new InvalidOperationException("Redis connection string is not configured.");
+            var options = ConfigurationOptions.Parse(connectionString);
+            return ConnectionMultiplexer.Connect(options);
         });
 
         services.AddHostedService<Worker>();
+
+        var otlpEndpoint = configuration.GetValue<string>("Otlp:Endpoint")
+                         ?? throw new InvalidOperationException("OTLP endpoint is not configured.");
 
         services.AddOpenTelemetry()
             .ConfigureResource(r => r.AddService("Cart.Denormalizer"))
@@ -28,17 +34,20 @@ var host = Host.CreateDefaultBuilder(args)
                 .AddSource("Cart.Denormalizer")
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                    opt.Endpoint = new Uri(otlpEndpoint);
                 }))
             .WithMetrics(mp => mp
                 .AddRuntimeInstrumentation()
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                    opt.Endpoint = new Uri(otlpEndpoint);
                 }));
     })
     .ConfigureLogging((context, logging) =>
     {
+        var otlpEndpoint = context.Configuration.GetValue<string>("Otlp:Endpoint")
+                         ?? throw new InvalidOperationException("OTLP endpoint is not configured.");
+
         logging.ClearProviders();
         logging.AddOpenTelemetry(opt =>
         {
@@ -48,7 +57,7 @@ var host = Host.CreateDefaultBuilder(args)
             opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("Cart.Denormalizer"));
             opt.AddOtlpExporter(exporter =>
             {
-                exporter.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                exporter.Endpoint = new Uri(otlpEndpoint);
             });
         });
     })

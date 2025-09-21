@@ -10,41 +10,52 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         services.AddKafkaServices(context.Configuration);
-        services.AddKafkaConsumer(context.Configuration, "notification-service-group");
+        services.AddKafkaConsumer(context.Configuration, context.Configuration["Kafka:ConsumerGroup"] ?? "notification-service-group");
         services.AddHostedService<Worker>();
 
+        var serviceName = context.Configuration["Service:Name"] ?? "Notification.Service";
+        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317";
+
         services.AddOpenTelemetry()
-            .ConfigureResource(r => r.AddService("Notification.Service"))
+            .ConfigureResource(r => r.AddService(serviceName))
             .WithTracing(tp => tp
-                .AddSource("Notification.Service")
+                .AddSource(serviceName)
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                    opt.Endpoint = new Uri(otlpEndpoint);
                 }))
             .WithMetrics(mp => mp
                 .AddRuntimeInstrumentation()
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                    opt.Endpoint = new Uri(otlpEndpoint);
                 }));
     })
     .ConfigureLogging((context, logging) =>
     {
         logging.ClearProviders();
+
+        var serviceName = context.Configuration["Service:Name"] ?? "Notification.Service";
+        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317";
+
         logging.AddOpenTelemetry(opt =>
         {
             opt.IncludeScopes = true;
             opt.IncludeFormattedMessage = true;
             opt.ParseStateValues = true;
-            opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("Notification.Service"));
+            opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName));
             opt.AddOtlpExporter(exporter =>
             {
-                exporter.Endpoint = new Uri(context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317");
+                exporter.Endpoint = new Uri(otlpEndpoint);
             });
         });
     })
     .Build();
 
-await host.Services.EnsureKafkaTopicsAsync(["cart-events"]);
+var topics = host.Services.GetRequiredService<IConfiguration>()
+    .GetSection("Kafka:Topics")
+    .Get<string[]>() ?? ["cart-events"];
+
+await host.Services.EnsureKafkaTopicsAsync(topics);
 
 await host.RunAsync();

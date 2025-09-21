@@ -7,6 +7,9 @@ namespace Billing.Service;
 public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
     : BackgroundService
 {
+    private static readonly JsonSerializerOptions JsonOptions =
+        new() { PropertyNameCaseInsensitive = true };
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         logger.LogInformation("Billing Service starting...");
@@ -20,6 +23,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
             logger.LogInformation("Subscribed to cart-events topic");
 
             while (!stoppingToken.IsCancellationRequested)
+            {
                 try
                 {
                     var consumeResult = consumer.Consume(stoppingToken);
@@ -29,10 +33,10 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                     logger.LogDebug("Received message: {Message}", consumeResult.Message.Value);
 
                     var cartEvent = JsonSerializer.Deserialize<CartEvent>(
-                        consumeResult.Message.Value,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        consumeResult.Message.Value, JsonOptions);
 
                     if (cartEvent != null)
+                    {
                         switch (cartEvent)
                         {
                             case ItemAddedEvent itemAdded:
@@ -42,6 +46,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                                 await ProcessItemRemoved(itemRemoved);
                                 break;
                         }
+                    }
 
                     consumer.Commit(consumeResult);
                 }
@@ -55,6 +60,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                     logger.LogError(ex, "Error processing message");
                     await Task.Delay(1000, stoppingToken);
                 }
+            }
         }
         finally
         {

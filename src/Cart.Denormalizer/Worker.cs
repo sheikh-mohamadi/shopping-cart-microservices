@@ -7,6 +7,11 @@ namespace Cart.Denormalizer;
 
 public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger) : BackgroundService
 {
+    private static readonly JsonSerializerOptions SerializerOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         logger.LogInformation("Cart Denormalizer Service starting...");
@@ -21,6 +26,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger) : 
             logger.LogInformation("Subscribed to cart-events topic");
 
             while (!stoppingToken.IsCancellationRequested)
+            {
                 try
                 {
                     var consumeResult = consumer.Consume(stoppingToken);
@@ -30,8 +36,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger) : 
                     logger.LogDebug("Received message for denormalization: {Message}", consumeResult.Message.Value);
 
                     var cartEvent = JsonSerializer.Deserialize<CartEvent>(
-                        consumeResult.Message.Value,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        consumeResult.Message.Value, SerializerOptions);
 
                     if (cartEvent != null)
                     {
@@ -60,6 +65,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger) : 
                     logger.LogError(ex, "Error processing message");
                     await Task.Delay(1000, stoppingToken);
                 }
+            }
         }
         finally
         {
@@ -72,7 +78,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger) : 
         var cartKey = $"cart:{@event.CartId}";
         var itemKey = $"item:{@event.Item.ProductId}";
 
-        var itemJson = JsonSerializer.Serialize(@event.Item);
+        var itemJson = JsonSerializer.Serialize(@event.Item, SerializerOptions);
 
         await db.HashSetAsync(cartKey, itemKey, itemJson);
         await db.KeyExpireAsync(cartKey, TimeSpan.FromDays(7));

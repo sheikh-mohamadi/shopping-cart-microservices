@@ -21,7 +21,7 @@ public class TopicManager(IAdminClient adminClient, ILogger<TopicManager> logger
 
             var topicsToCreate = topics.Where(topic => !existingTopics.Contains(topic)).ToList();
 
-            if (!topicsToCreate.Any())
+            if (topicsToCreate.Count == 0)
             {
                 logger.LogInformation("All required topics already exist");
                 return;
@@ -43,13 +43,17 @@ public class TopicManager(IAdminClient adminClient, ILogger<TopicManager> logger
         }
         catch (CreateTopicsException ex)
         {
-            logger.LogError(ex, "Error creating topics: {Reason}", ex.Message);
-            throw;
+            logger.LogError(ex,
+                "Error creating topics: {Reason}. Topics: {Topics}",
+                ex.Message, string.Join(", ", ex.Results.Select(r => r.Topic)));
+
+            throw new InvalidOperationException(
+                $"Failed to create one or more Kafka topics. Reason: {ex.Message}", ex);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error ensuring topics exist");
-            throw;
+            logger.LogError(ex, "Unexpected error ensuring topics exist");
+            throw new InvalidOperationException("Unexpected error while ensuring Kafka topics exist.", ex);
         }
     }
 }
