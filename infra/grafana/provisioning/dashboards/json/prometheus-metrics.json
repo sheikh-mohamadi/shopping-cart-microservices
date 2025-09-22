@@ -1,0 +1,29 @@
+{
+  "id": null,
+  "title": "Prometheus Metrics Overview",
+  "uid": "prom-metrics",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage",
+      "targets": [
+        {
+          "expr": "rate(process_cpu_seconds_total[1m])",
+          "legendFormat": "{{job}}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes",
+          "legendFormat": "{{job}}"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 16,
+  "version": 1
+}

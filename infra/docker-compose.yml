@@ -78,8 +78,9 @@ services:
   otel-collector:
     image: otel/opentelemetry-collector:0.95.0
     container_name: otel-collector
+    command: ["--config=/etc/otelcol/otel-collector-config.yaml"]
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./otel-collector-config.yaml:/etc/otelcol/otel-collector-config.yaml
     ports:
       - "4317:4317"   # gRPC OTLP
       - "4318:4318"   # HTTP OTLP
@@ -137,8 +138,24 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
     networks:
       - cart-net
+
+  # Tempo
+  tempo:
+    image: grafana/tempo:2.7.0
+    container_name: tempo
+    ports:
+      - "3200:3200"
+    networks:
+      - cart-net
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    volumes:
+      - ./tempo/tempo.yaml:/etc/tempo/tempo.yaml
+
 
 volumes:
   postgres_data:

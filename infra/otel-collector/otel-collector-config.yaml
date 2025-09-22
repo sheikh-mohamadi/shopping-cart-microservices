@@ -8,9 +8,11 @@ exporters:
   prometheus:
     endpoint: "0.0.0.0:9464"
   logging:
-    loglevel: info
-  otlphttp:
-    endpoint: "http://prometheus:9090"
+    verbosity: normal
+  tempo:
+    endpoint: "tempo:4317"
+    tls:
+      insecure: true
 
 processors:
   batch:
@@ -20,7 +22,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging]
+      exporters: [logging, tempo]
     metrics:
       receivers: [otlp]
       processors: [batch]

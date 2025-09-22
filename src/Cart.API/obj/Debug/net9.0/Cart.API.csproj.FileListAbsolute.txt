@@ -97,3 +97,5 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/obj/Debug/net9.0/Cart.API.pdb
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/obj/Debug/net9.0/Cart.API.genruntimeconfig.cache
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/obj/Debug/net9.0/ref/Cart.API.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Polly.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.API/bin/Debug/net9.0/Polly.Core.dll

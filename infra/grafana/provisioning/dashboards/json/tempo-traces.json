@@ -1,0 +1,23 @@
+{
+  "id": null,
+  "title": "Tempo Traces Explorer",
+  "uid": "tempo-traces",
+  "panels": [
+    {
+      "type": "traces",
+      "title": "Trace Search",
+      "datasource": {
+        "type": "tempo",
+        "uid": "tempo"
+      },
+      "targets": [
+        {
+          "queryType": "search",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 16,
+  "version": 1
+}

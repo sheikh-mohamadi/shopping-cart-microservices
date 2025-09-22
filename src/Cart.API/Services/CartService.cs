@@ -23,7 +23,7 @@ public class CartService(IProducer<string, string> producer, ILogger<CartService
         catch (ProduceException<string, string> ex)
         {
             logger.LogError(ex,
-                "Kafka produce error while publishing {EventType} for cart {CartId}",
+                "Kafka produce error while : {EventType} for cart {CartId}",
                 @event.EventType, @event.CartId);
 
             throw new KafkaPublishException(

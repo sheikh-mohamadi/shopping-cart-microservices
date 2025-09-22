@@ -1,0 +1,22 @@
+{
+  "id": null,
+  "title": "Elasticsearch Logs Viewer",
+  "uid": "es-logs",
+  "panels": [
+    {
+      "type": "logs",
+      "title": "Collector Logs",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch"
+      },
+      "targets": [
+        {
+          "query": "*"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 16,
+  "version": 1
+}
