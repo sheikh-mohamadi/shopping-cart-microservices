@@ -1,127 +1,191 @@
-# 🛒 Shopping Cart Microservices
+🛒 Shopping Cart Microservices
 
-![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
-![Kafka](https://img.shields.io/badge/Apache%20Kafka-2.3-231F20?logo=apachekafka)
-![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql)
-![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?logo=docker)
+A distributed, event-driven shopping cart system built with .NET 9, leveraging CQRS, Event Sourcing, and Microservices Architecture for scalability and resilience.
+📋 Table of Contents
 
-A distributed, event-driven shopping cart system built with .NET 9 using CQRS, Event Sourcing, and Microservices Architecture.
+Features
+System Architecture
+Services
+Project Structure
+Getting Started
+Configuration
+API Usage
+Authentication & Authorization
+Development
+Monitoring & Observability
+Troubleshooting
+Future Enhancements
+Contributing
+License
 
-## ✨ Features
+✨ Features
 
-- **Event-Driven Architecture** - Powered by Apache Kafka
-- **CQRS Pattern** - Separate read/write models
-- **Event Sourcing** - Full history of all cart changes
-- **Dockerized** - Easy deployment & scaling
-- **Real-time Updates** - Via Redis-based read model
-- **Fraud Detection** - Real-time prevention system
-- **Payment Processing** - Asynchronous billing handling
-- **Notifications** - Email & SMS support
-- **Monitoring** - OpenTelemetry, Prometheus, and Grafana integration
+Event-Driven Architecture: Powered by Apache Kafka for asynchronous communication.
+CQRS Pattern: Separates read and write models for optimized performance.
+Event Sourcing: Stores full history of cart changes in PostgreSQL.
+Dockerized Deployment: Simplifies setup and scaling with Docker Compose.
+Real-time Updates: Uses Redis for fast read model projections.
+Fraud Detection: Real-time analysis to prevent fraudulent activities.
+Payment Processing: Asynchronous billing via dedicated service.
+Notifications: Supports email and SMS notifications for user events.
+Authentication & Authorization: JWT-based authentication with role-based access control (Customer, Admin).
+Monitoring: Integrated with OpenTelemetry, Prometheus, Grafana, Elasticsearch, and Kibana.
 
-## 🏗️ System Architecture
-
-```mermaid
+🏗️ System Architecture
 graph TB
-    API[Cart API Gateway] --> Kafka[(Apache Kafka)]
+    Client[Client] -->|JWT Auth| API[Cart API Gateway]
+    API -->|Reads| Redis[(Redis - Read Model)]
+    API -->|Publishes Events| Kafka[(Apache Kafka)]
     Kafka --> Billing[Billing Service]
     Kafka --> Fraud[Fraud Detection Service]
     Kafka --> Notifications[Notification Service]
     Kafka --> Denormalizer[Read Model Denormalizer]
-    Denormalizer --> Redis[(Redis - Read Model)]
-    
-    API --> Redis
+    Denormalizer -->|Updates| Redis
+    API -->|Stores Users| Postgres[(PostgreSQL - User Data)]
     
     classDef microservice fill:#e1f5fe;
     classDef database fill:#f3e5f5;
     classDef queue fill:#fff3e0;
     
-    class API,Billing,Fraud,Notifications,Denormalizer microservice;
-    class Redis database;
+    class Client,API,Billing,Fraud,Notifications,Denormalizer microservice;
+    class Redis,Postgres database;
     class Kafka queue;
-```
 
-## 📦 Services
+📦 Services
 
-| Service | Description | Port |
-|---------|-------------|------|
-| **Cart.API** | Main gateway & cart handling | 5105 |
-| **Billing.Service** | Billing & payment processing | 5201 |
-| **Fraud.Service** | Fraud detection & prevention | 5202 |
-| **Notification.Service** | Email & SMS notifications | 5203 |
-| **Cart.Denormalizer** | Read model projection | 5204 |
 
-## 📁 Project Structure
 
-```
+Service
+Description
+Port
+
+
+
+Cart.API
+API gateway and cart management
+5105
+
+
+Billing.Service
+Payment and billing processing
+5201
+
+
+Fraud.Service
+Fraud detection and prevention
+5202
+
+
+Notification.Service
+Email and SMS notifications
+5203
+
+
+Cart.Denormalizer
+Read model projection for Redis
+5204
+
+
+📁 Project Structure
 proj/
 ├── src/
-│   ├── Cart.API/                 # Main API gateway
-│   ├── Cart.Domain/              # Shared domain models
+│   ├── Cart.API/                 # API gateway with authentication and cart handling
+│   ├── Cart.Domain/              # Shared domain models and events
 │   ├── Billing.Service/          # Payment processing
 │   ├── Fraud.Service/            # Fraud detection
-│   ├── Notification.Service/     # Notifications
-│   ├── Cart.Denormalizer/        # Read model denormalizer
-│   └── Shared.Kernel/            # Shared infrastructure
+│   ├── Notification.Service/     # Notification handling
+│   ├── Cart.Denormalizer/        # Read model denormalization
+│   └── Shared.Kernel/            # Shared infrastructure (Kafka, logging)
 └── infra/
-    ├── docker-compose.yml        # Docker setup
-    └── monitoring configs        # OTEL, Prometheus, Grafana
-```
+    ├── docker-compose.yml        # Docker setup for services
+    ├── grafana/                  # Grafana dashboards and provisioning
+    ├── otel-collector/           # OpenTelemetry collector configuration
+    ├── prometheus.yml            # Prometheus configuration
+    └── tempo/                    # Tempo tracing configuration
 
-## 🚀 Getting Started
+🚀 Getting Started
+Prerequisites
 
-### Prerequisites
+.NET 9 SDK
+Docker & Docker Compose
+Git
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [Docker & Docker Compose](https://docs.docker.com/get-docker/)
+Installation
 
-### Installation
-
-1. **Clone and setup**:
-```bash
-git clone <repository-url>
+Clone the repository:
+git clone https://github.com/sheikh-mohamadi/shopping-cart-microservices.git
 cd shopping-cart-microservices
-```
 
-2. **Start infrastructure**:
-```bash
+
+Start infrastructure:
 docker-compose -f infra/docker-compose.yml up -d
-```
 
-3. **Build and run**:
-```bash
+
+Build and run the solution:
 dotnet restore
 dotnet build
 dotnet run --project src/ShoppingCart.sln
-```
 
-## ⚙️ Configuration
 
-### Environment Variables
 
-Create `.env` file or set these variables:
-
-```bash
+⚙️ Configuration
+Environment Variables
+Create a .env file in the project root or set these variables:
 KAFKA_BOOTSTRAP_SERVERS=localhost:9092
 REDIS_CONNECTION_STRING=localhost:6379
-POSTGRES_CONNECTION_STRING=Host=localhost;Database=shoppingcart;Username=postgres;Password=password
+POSTGRES_CONNECTION_STRING=Host=localhost;Database=shopping_cart;Username=postgres;Password=password
 ASPNETCORE_ENVIRONMENT=Development
-```
+JWT_KEY=your-secure-jwt-key-here
 
-### AppSettings
 
-Each service has environment-specific configuration files:
-- `appsettings.json` - Base configuration
-- `appsettings.Development.json` - Development settings
-- `appsettings.Docker.json` - Docker-specific settings
+Note: Replace your-secure-jwt-key-here with a strong, unique key for JWT signing.
 
-## 📡 API Usage
+AppSettings
+Each service includes configuration files:
 
-### Add Item to Cart
-```http
+appsettings.json: Base configuration.
+appsettings.Development.json: Development-specific settings.
+appsettings.Docker.json: Docker-specific settings.
+
+📡 API Usage
+All endpoints (except authentication) require a JWT token in the Authorization header.
+Authentication & Authorization
+Register a User
+POST /api/auth/register
+Content-Type: application/json
+
+{
+    "username": "user123",
+    "password": "securePassword123",
+    "role": "Customer"
+}
+
+Login
+POST /api/auth/login
+Content-Type: application/json
+
+{
+    "username": "user123",
+    "password": "securePassword123"
+}
+
+Response:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+
+Include the token in subsequent requests:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+Roles:
+
+Customer: Can manage their cart (add/remove items).
+Admin: Can view cart events.
+
+Add Item to Cart
 POST /api/cart/{cartId}/items
 Content-Type: application/json
+Authorization: Bearer {token}
 
 {
     "userId": "user-123",
@@ -130,22 +194,24 @@ Content-Type: application/json
     "price": 25000000,
     "quantity": 1
 }
-```
 
-### Remove Item from Cart
-```http
+Remove Item from Cart
 DELETE /api/cart/{cartId}/items/{productId}
-```
+Content-Type: application/json
+Authorization: Bearer {token}
 
-### Get Cart View
-```http
+{
+    "userId": "user-123"
+}
+
+Get Cart View
 GET /api/cart/view/{cartId}
-```
+Authorization: Bearer {token}
 
-### Example Request
-```bash
+Example Request
 curl -X POST "http://localhost:5105/api/cart/123e4567-e89b-12d3-a456-426614174000/items" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -d '{
     "userId": "user-123",
     "productId": "prod-456",
@@ -153,13 +219,10 @@ curl -X POST "http://localhost:5105/api/cart/123e4567-e89b-12d3-a456-42661417400
     "price": 25000000,
     "quantity": 1
   }'
-```
 
-## 🔧 Development
-
-### Running Services Individually
-
-```bash
+🔧 Development
+Running Services Individually
+Run each service separately for development:
 # Cart API
 dotnet run --project src/Cart.API/
 
@@ -174,36 +237,62 @@ dotnet run --project src/Notification.Service/
 
 # Denormalizer
 dotnet run --project src/Cart.Denormalizer/
-```
 
-### Monitoring
+Database Migrations
+Apply migrations for the Cart API:
+dotnet ef migrations add InitialCreate --project src/Cart.API
+dotnet ef database update --project src/Cart.API
 
+📊 Monitoring & Observability
 Access monitoring tools:
-- **Grafana**: http://localhost:3000
-- **Prometheus**: http://localhost:9090
-- **Kibana**: http://localhost:5601
 
-## 🐛 Troubleshooting
+Grafana: http://localhost:3000 (Dashboards: Prometheus Metrics, Elasticsearch Logs, Tempo Traces)
+Prometheus: http://localhost:9090
+Kibana: http://localhost:5601
 
-### Common Issues
+Configuration files are located in infra/:
 
-1. **Kafka connection issues**:
-   - Ensure Kafka and Zookeeper are running
-   - Check `KAFKA_BOOTSTRAP_SERVERS` configuration
+grafana/provisioning/: Dashboard and datasource configurations.
+otel-collector/: OpenTelemetry collector settings.
+prometheus.yml: Prometheus scrape configurations.
+tempo/: Tempo tracing settings.
 
-2. **Redis connection errors**:
-   - Verify Redis container is running
-   - Check connection string configuration
+🐛 Troubleshooting
+Common Issues
 
-3. **OpenTelemetry export failures**:
-   - Ensure OTEL collector is running
-   - Check endpoint configuration
+Kafka Connection Issues:
 
-### Debugging
+Ensure Kafka and Zookeeper containers are running (docker ps).
+Verify KAFKA_BOOTSTRAP_SERVERS in .env or appsettings.json.
 
-Enable debug logging by setting Serilog minimum level to "Debug" in appsettings:
 
-```json
+Redis Connection Errors:
+
+Confirm Redis container is active.
+Check REDIS_CONNECTION_STRING configuration.
+
+
+PostgreSQL Errors:
+
+Ensure PostgreSQL container is running.
+Verify POSTGRES_CONNECTION_STRING.
+
+
+Authentication Errors:
+
+Ensure valid JWT token is provided in the Authorization header.
+Check Jwt:Key in appsettings.json matches the signing key.
+
+
+OpenTelemetry Failures:
+
+Verify OTEL collector container is running.
+Check Otlp:Endpoint in appsettings.json.
+
+
+
+Debugging
+Enable detailed logging by setting Serilog to Debug in appsettings.json:
 {
   "Serilog": {
     "MinimumLevel": {
@@ -211,26 +300,11 @@ Enable debug logging by setting Serilog minimum level to "Debug" in appsettings:
     }
   }
 }
-```
 
-## 📊 Monitoring & Observability
+🔮 Future Enhancements
 
-The system includes comprehensive monitoring:
-
-- **OpenTelemetry** tracing across all services
-- **Prometheus** metrics collection
-- **Grafana** dashboards for visualization
-- **Elasticsearch** and **Kibana** for log aggregation
-
-Check the `infra/` directory for monitoring configuration files.
-
-## 🔮 Future Enhancements
-
-- [ ] Authentication & Authorization
-- [ ] Payment gateway integration
-- [ ] Advanced fraud detection rules
-- [ ] Email/SMS notification templates
-- [ ] Load testing suite
-- [ ] Additional monitoring dashboards
-
-
+ Payment gateway integration (e.g., Stripe, PayPal)
+ Advanced fraud detection with machine learning
+ Customizable email/SMS notification templates
+ Load testing suite for performance optimization
+ Enhanced Grafana dashboards for deeper insights
