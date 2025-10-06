@@ -1,14 +1,17 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 using Cart.API.Services;
 using Cart.Domain.Events;
 using Cart.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cart.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]/{cartId:guid}")]
+[Authorize(Roles = "Customer,Admin")]
 public class CartController(
     CartService cartService,
     ILogger<CartController> logger)
@@ -21,6 +24,10 @@ public class CartController(
     {
         try
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            if (request.UserId != userId)
+                return Unauthorized(new { Error = "User ID mismatch" });
+
             var @event = new ItemAddedEvent
             {
                 CartId = cartId,
@@ -52,6 +59,10 @@ public class CartController(
     {
         try
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            if (request.UserId != userId)
+                return Unauthorized(new { Error = "User ID mismatch" });
+
             var @event = new ItemRemovedEvent
             {
                 CartId = cartId,
@@ -70,6 +81,7 @@ public class CartController(
     }
 
     [HttpGet("events")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetEvents(Guid cartId)
     {
         try
