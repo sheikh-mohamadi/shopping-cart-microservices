@@ -1,6 +1,6 @@
 # 🛒 Shopping Cart Microservices
 
-![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet) ![Kafka](https://img.shields.io/badge/Apache%20Kafka-2.3-231F20?logo=apachekafka) ![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql) ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?logo=docker)
+![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet) ![Kafka](https://img.shields.io/badge/Apache%20Kafka-2.3-231F20?logo=apachekafka) ![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql) ![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?logo=docker) ![ML.NET](https://img.shields.io/badge/ML.NET-3.0.1-512BD4?logo=dotnet)
 
 A distributed, event-driven shopping cart system built with .NET 9, leveraging CQRS, Event Sourcing, and Microservices Architecture for scalability and resilience.
 
@@ -28,7 +28,7 @@ A distributed, event-driven shopping cart system built with .NET 9, leveraging C
 - **Event Sourcing**: Stores full history of cart changes in PostgreSQL.
 - **Dockerized Deployment**: Simplifies setup and scaling with Docker Compose.
 - **Real-time Updates**: Uses Redis for fast read model projections.
-- **Fraud Detection**: Real-time analysis to prevent fraudulent activities.
+- **Fraud Detection**: Real-time fraud detection using ML.NET with unsupervised anomaly detection (Randomized PCA) to identify suspicious cart activities.
 - **Payment Processing**: Asynchronous billing via dedicated service.
 - **Notifications**: Supports email and SMS notifications for user events.
 - **Authentication & Authorization**: JWT-based authentication with role-based access control (Customer, Admin).
@@ -63,7 +63,7 @@ graph TB
 | --- | --- | --- |
 | **Cart.API** | API gateway and cart management | 5105 |
 | **Billing.Service** | Payment and billing processing | 5201 |
-| **Fraud.Service** | Fraud detection and prevention | 5202 |
+| **Fraud.Service** | Fraud detection using ML.NET anomaly detection | 5202 |
 | **Notification.Service** | Email and SMS notifications | 5203 |
 | **Cart.Denormalizer** | Read model projection for Redis | 5204 |
 
@@ -75,7 +75,8 @@ proj/
 │   ├── Cart.API/                 # API gateway with authentication and cart handling
 │   ├── Cart.Domain/              # Shared domain models and events
 │   ├── Billing.Service/          # Payment processing
-│   ├── Fraud.Service/            # Fraud detection
+│   ├── Fraud.Service/            # Fraud detection with ML.NET model
+│   ├── Fraud.ModelTrainer/       # Training ML.NET model for fraud detection
 │   ├── Notification.Service/     # Notification handling
 │   ├── Cart.Denormalizer/        # Read model denormalization
 │   └── Shared.Kernel/            # Shared infrastructure (Kafka, logging)
@@ -110,11 +111,38 @@ proj/
    docker-compose -f infra/docker-compose.yml up -d
    ```
 
-3. **Build and run the solution**:
+3. **Build the solution**:
 
    ```bash
    dotnet restore
    dotnet build
+   ```
+
+4. **Train the ML.NET fraud detection model**:
+
+   ```bash
+   dotnet run --project src/Fraud.ModelTrainer
+   ```
+
+   This generates `fraudModel.zip` in the `Fraud.ModelTrainer` output directory. Copy it to `src/Fraud.Service`:
+
+   ```bash
+   cp src/Fraud.ModelTrainer/bin/Debug/net9.0/fraudModel.zip src/Fraud.Service/
+   ```
+
+5. **Run the services**:
+
+   ```bash
+   dotnet run --project src/Cart.API
+   dotnet run --project src/Billing.Service
+   dotnet run --project src/Fraud.Service
+   dotnet run --project src/Notification.Service
+   dotnet run --project src/Cart.Denormalizer
+   ```
+
+   Alternatively, run all services together:
+
+   ```bash
    dotnet run --project src/ShoppingCart.sln
    ```
 
@@ -141,6 +169,18 @@ Each service includes configuration files:
 - `appsettings.json`: Base configuration.
 - `appsettings.Development.json`: Development-specific settings.
 - `appsettings.Docker.json`: Docker-specific settings.
+
+### Fraud Detection Model
+
+The `Fraud.Service` uses a pre-trained ML.NET model (`fraudModel.zip`) for anomaly detection. Ensure the model file is present in the `Fraud.Service` directory and included in the `.csproj`:
+
+```xml
+<ItemGroup>
+    <Content Include="fraudModel.zip">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+</ItemGroup>
+```
 
 ## 📡 API Usage
 
@@ -265,6 +305,20 @@ dotnet run --project src/Notification.Service/
 dotnet run --project src/Cart.Denormalizer/
 ```
 
+### Training the Fraud Detection Model
+
+To retrain the ML.NET model for fraud detection:
+
+```bash
+dotnet run --project src/Fraud.ModelTrainer
+```
+
+Copy the generated `fraudModel.zip` to `src/Fraud.Service`:
+
+```bash
+cp src/Fraud.ModelTrainer/bin/Debug/net9.0/fraudModel.zip src/Fraud.Service/
+```
+
 ### Database Migrations
 
 Apply migrations for the Cart API:
@@ -288,6 +342,10 @@ Configuration files are located in `infra/`:
 - `otel-collector/`: OpenTelemetry collector settings.
 - `prometheus.yml`: Prometheus scrape configurations.
 - `tempo/`: Tempo tracing settings.
+
+### Fraud Detection Metrics
+
+The `Fraud.Service` logs fraud detection scores to OpenTelemetry. Monitor these in Grafana for insights into model performance.
 
 ## 🐛 Troubleshooting
 
@@ -318,6 +376,18 @@ Configuration files are located in `infra/`:
    - Verify OTEL collector container is running.
    - Check `Otlp:Endpoint` in `appsettings.json`.
 
+6. **Fraud Detection Model Errors**:
+
+   - Ensure `fraudModel.zip` exists in `src/Fraud.Service/`.
+   - Verify the model was trained using `Fraud.ModelTrainer` and copied correctly.
+   - Check ML.NET dependencies in `Fraud.Service.csproj`:
+     ```xml
+     <ItemGroup>
+         <PackageReference Include="Microsoft.ML" Version="3.0.1" />
+         <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.1" />
+     </ItemGroup>
+     ```
+
 ### Debugging
 
 Enable detailed logging by setting Serilog to Debug in `appsettings.json`:
@@ -335,11 +405,8 @@ Enable detailed logging by setting Serilog to Debug in `appsettings.json`:
 ## 🔮 Future Enhancements
 
 - [ ] Payment gateway integration (e.g., Stripe, PayPal)
-
-- [ ] Advanced fraud detection with machine learning
-
 - [ ] Customizable email/SMS notification templates
-
 - [ ] Load testing suite for performance optimization
-
 - [ ] Enhanced Grafana dashboards for deeper insights
+- [ ] Improve fraud detection with supervised learning using labeled data
+- [ ] Add more features to fraud detection (e.g., user location, login frequency)
