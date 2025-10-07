@@ -75,7 +75,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger, ML
 
         var cartData = new CartData
         {
-            ItemCount = @event is ItemAddedEvent addedEvent ? 1 : 0,
+            ItemCount = @event is ItemAddedEvent ? 1 : 0,
             TotalAmount = @event is ItemAddedEvent added ? (float)added.Item.Price : 0,
             TimeSinceLastEvent = 0
         };

@@ -1,10 +1,10 @@
 ﻿using Fraud.Service.Model;
 using Microsoft.ML;
+using System.Diagnostics.CodeAnalysis;
 
 var mlContext = new MLContext(seed: 0);
 
 var data = GenerateSyntheticData(1000);
-
 var dataView = mlContext.Data.LoadFromEnumerable(data);
 
 var pipeline = mlContext.Transforms.Concatenate("Features",
@@ -19,13 +19,14 @@ var model = pipeline.Fit(dataView);
 
 using var stream = new FileStream("fraudModel.zip", FileMode.Create, FileAccess.Write);
 mlContext.Model.Save(model, dataView.Schema, stream);
-Console.WriteLine("مدل در fraudModel.zip ذخیره شد.");
+Console.WriteLine("✅ مدل در فایل fraudModel.zip ذخیره شد.");
 
 var predEngine = mlContext.Model.CreatePredictionEngine<CartData, FraudPrediction>(model);
 var testData = new CartData { ItemCount = 50, TotalAmount = 10000, TimeSinceLastEvent = 10 };
 var prediction = predEngine.Predict(testData);
-Console.WriteLine($"امتیاز ناهنجاری برای داده تستی: {prediction.Score}");
+Console.WriteLine($"🔍 امتیاز ناهنجاری برای داده تستی: {prediction.Score}");
 
+[SuppressMessage("Security", "SCS0005:Weak random number generator", Justification = "Used only for synthetic ML training data generation.")]
 static IEnumerable<CartData> GenerateSyntheticData(int count)
 {
     var random = new Random(0);

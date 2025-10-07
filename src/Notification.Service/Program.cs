@@ -14,7 +14,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddHostedService<Worker>();
 
         var serviceName = context.Configuration["Service:Name"] ?? "Notification.Service";
-        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317";
+        var otlpEndpoint = context.Configuration["Otlp:Endpoint"];
 
         services.AddOpenTelemetry()
             .ConfigureResource(r => r.AddService(serviceName))
@@ -36,7 +36,7 @@ var host = Host.CreateDefaultBuilder(args)
         logging.ClearProviders();
 
         var serviceName = context.Configuration["Service:Name"] ?? "Notification.Service";
-        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317";
+        var otlpEndpoint = context.Configuration["Otlp:Endpoint"];
 
         logging.AddOpenTelemetry(opt =>
         {
