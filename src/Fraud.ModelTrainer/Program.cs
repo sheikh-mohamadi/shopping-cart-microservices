@@ -19,12 +19,11 @@ var model = pipeline.Fit(dataView);
 
 using var stream = new FileStream("fraudModel.zip", FileMode.Create, FileAccess.Write);
 mlContext.Model.Save(model, dataView.Schema, stream);
-Console.WriteLine("✅ مدل در فایل fraudModel.zip ذخیره شد.");
 
 var predEngine = mlContext.Model.CreatePredictionEngine<CartData, FraudPrediction>(model);
 var testData = new CartData { ItemCount = 50, TotalAmount = 10000, TimeSinceLastEvent = 10 };
 var prediction = predEngine.Predict(testData);
-Console.WriteLine($"🔍 امتیاز ناهنجاری برای داده تستی: {prediction.Score}");
+Console.WriteLine($"{prediction.Score}");
 
 [SuppressMessage("Security", "SCS0005:Weak random number generator", Justification = "Used only for synthetic ML training data generation.")]
 static IEnumerable<CartData> GenerateSyntheticData(int count)
