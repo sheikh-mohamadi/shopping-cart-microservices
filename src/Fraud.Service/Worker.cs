@@ -1,10 +1,12 @@
 using System.Text.Json;
 using Cart.Domain.Events;
 using Confluent.Kafka;
+using Fraud.Service.Model;
+using Microsoft.ML;
 
 namespace Fraud.Service;
 
-public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
+public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger, MLContext mlContext, ITransformer mlModel)
     : BackgroundService
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -24,7 +26,11 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
             consumer.Subscribe("cart-events");
             logger.LogInformation("Subscribed to cart-events topic");
 
+            // ایجاد PredictionEngine
+            var predEngine = mlContext.Model.CreatePredictionEngine<CartData, FraudPrediction>(mlModel);
+
             while (!stoppingToken.IsCancellationRequested)
+            {
                 try
                 {
                     var consumeResult = consumer.Consume(stoppingToken);
@@ -34,10 +40,12 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                     logger.LogDebug("Received message for fraud check: {Message}", consumeResult.Message.Value);
 
                     var cartEvent = JsonSerializer.Deserialize<CartEvent>(
-                        consumeResult.Message.Value,
-                        JsonOptions); // ✅ استفاده از instance کش‌شده
+                        consumeResult.Message.Value, JsonOptions);
 
-                    if (cartEvent != null) await CheckForFraud(cartEvent);
+                    if (cartEvent != null)
+                    {
+                        await CheckForFraud(cartEvent, predEngine);
+                    }
 
                     consumer.Commit(consumeResult);
                 }
@@ -51,6 +59,7 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
                     logger.LogError(ex, "Error processing message");
                     await Task.Delay(1000, stoppingToken);
                 }
+            }
         }
         finally
         {
@@ -58,16 +67,33 @@ public class Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
         }
     }
 
-    private async Task CheckForFraud(CartEvent @event)
+    private async Task CheckForFraud(CartEvent @event, PredictionEngine<CartData, FraudPrediction> predEngine)
     {
         logger.LogInformation(
             "🔍 Checking for fraud in cart {CartId} for user {UserId}",
             @event.CartId, @event.UserId);
-        
-        await Task.Delay(150);
 
-        logger.LogInformation(
-            "✅ Fraud check completed for cart {CartId}",
-            @event.CartId);
+        var cartData = new CartData
+        {
+            ItemCount = @event is ItemAddedEvent addedEvent ? 1 : 0,
+            TotalAmount = @event is ItemAddedEvent added ? (float)added.Item.Price : 0,
+            TimeSinceLastEvent = 0
+        };
+
+        var prediction = predEngine.Predict(cartData);
+
+        const float fraudThreshold = 0.9f;
+
+        if (prediction.Score > fraudThreshold)
+        {
+            logger.LogWarning("🚨 Fraud detected in cart {CartId} with score {Score}", @event.CartId, prediction.Score);
+        }
+        else
+        {
+            logger.LogInformation("✅ No fraud detected in cart {CartId} with score {Score}", @event.CartId,
+                prediction.Score);
+        }
+
+        await Task.Delay(150);
     }
 }

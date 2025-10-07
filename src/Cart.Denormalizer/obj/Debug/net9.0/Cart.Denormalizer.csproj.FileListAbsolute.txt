@@ -109,3 +109,5 @@
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Denormalizer/obj/Debug/net9.0/Cart.Denormalizer.pdb
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Denormalizer/obj/Debug/net9.0/Cart.Denormalizer.genruntimeconfig.cache
 /Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Denormalizer/obj/Debug/net9.0/ref/Cart.Denormalizer.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Denormalizer/bin/Debug/net9.0/Polly.dll
+/Users/mohammadreza/Documents/Github/ShoppingCart/proj/src/Cart.Denormalizer/bin/Debug/net9.0/Polly.Core.dll

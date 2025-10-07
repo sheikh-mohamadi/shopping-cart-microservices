@@ -1,4 +1,5 @@
 using Fraud.Service;
+using Microsoft.ML;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -13,32 +14,34 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddKafkaConsumer(context.Configuration, "fraud-service-group");
         services.AddHostedService<Worker>();
 
+        services.AddSingleton<MLContext>(_ => new MLContext(seed: 0));
+        services.AddSingleton<ITransformer>(sp =>
+        {
+            var mlContext = sp.GetRequiredService<MLContext>();
+            ITransformer mlModel;
+            DataViewSchema modelSchema;
+            using var stream = new FileStream("fraudModel.zip", FileMode.Open, FileAccess.Read);
+            mlModel = mlContext.Model.Load(stream, out modelSchema);
+            return mlModel;
+        });
+
         var serviceName = context.Configuration["Service:Name"] ?? "Fraud.Service";
-        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] 
-                           ?? "http://otel-collector:4317";
+        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317";
 
         services.AddOpenTelemetry()
             .ConfigureResource(r => r.AddService(serviceName))
             .WithTracing(tp => tp
                 .AddSource(serviceName)
-                .AddOtlpExporter(opt =>
-                {
-                    opt.Endpoint = new Uri(otlpEndpoint);
-                }))
+                .AddOtlpExporter(opt => { opt.Endpoint = new Uri(otlpEndpoint); }))
             .WithMetrics(mp => mp
                 .AddRuntimeInstrumentation()
-                .AddOtlpExporter(opt =>
-                {
-                    opt.Endpoint = new Uri(otlpEndpoint);
-                }));
+                .AddOtlpExporter(opt => { opt.Endpoint = new Uri(otlpEndpoint); }));
     })
     .ConfigureLogging((context, logging) =>
     {
         logging.ClearProviders();
-
         var serviceName = context.Configuration["Service:Name"] ?? "Fraud.Service";
-        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] 
-                           ?? "http://otel-collector:4317";
+        var otlpEndpoint = context.Configuration["Otlp:Endpoint"] ?? "http://otel-collector:4317";
 
         logging.AddOpenTelemetry(opt =>
         {
@@ -46,10 +49,7 @@ var host = Host.CreateDefaultBuilder(args)
             opt.IncludeFormattedMessage = true;
             opt.ParseStateValues = true;
             opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName));
-            opt.AddOtlpExporter(exporter =>
-            {
-                exporter.Endpoint = new Uri(otlpEndpoint);
-            });
+            opt.AddOtlpExporter(exporter => { exporter.Endpoint = new Uri(otlpEndpoint); });
         });
     })
     .Build();
