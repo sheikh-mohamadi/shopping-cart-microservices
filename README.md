@@ -401,12 +401,3 @@ Enable detailed logging by setting Serilog to Debug in `appsettings.json`:
   }
 }
 ```
-
-## 🔮 Future Enhancements
-
-- [ ] Payment gateway integration (e.g., Stripe, PayPal)
-- [ ] Customizable email/SMS notification templates
-- [ ] Load testing suite for performance optimization
-- [ ] Enhanced Grafana dashboards for deeper insights
-- [ ] Improve fraud detection with supervised learning using labeled data
-- [ ] Add more features to fraud detection (e.g., user location, login frequency)
